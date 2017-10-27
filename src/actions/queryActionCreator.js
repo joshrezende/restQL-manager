@@ -149,7 +149,7 @@ export function handleLoadNamespaces() {
   dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADING });
 
   loadNamespaces((response) => {
-    if (response.error !== undefined) {
+    if (response.error) {
       dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADED, value: [] });
       alert('Error loading namespaces: ' + response.error);
     }
