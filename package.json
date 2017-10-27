@@ -2,11 +2,11 @@
   "name": "restql-manager",
   "version": "0.1.0",
   "dependencies": {
-    "@types/react-sidebar": "^2.2.0",
+    "@types/react-sidebar": "^2.2.2",
     "bootstrap": "^3.3.7",
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
-    "prop-types": "^15.5.8",
+    "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.5",
     "react-codemirror": "^0.3.0",
