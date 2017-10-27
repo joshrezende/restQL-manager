@@ -149,13 +149,13 @@ export function handleLoadNamespaces() {
   dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADING });
 
   loadNamespaces((response) => {
-    let result = processResult(response);
-
-    if (result.error !== undefined) {
+    if (response.error !== undefined) {
       dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADED, value: [] });
-      alert('Error loading namespaces: ' + result.error);
+      alert('Error loading namespaces: ' + response.error);
     }
     else {
+      let result = processResult(response);
+
       dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADED, value: result });
     }
   });

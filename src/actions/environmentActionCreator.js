@@ -25,10 +25,10 @@ export function handleLoadTenants() {
   const dispatch = store.dispatch;
 
   loadTenants((response) => {
-    let result = processResult(response);
+    let result = response.error? {} : processResult(response);
     const tenants = result.tenants || [];
 
-    if (!result.error && tenants.length > 0) {
+    if (tenants.length > 0) {
       dispatch({ type: ENVIRONMENT_ACTIONS.LOAD_TENANTS, value: tenants });
       dispatch({ type: ENVIRONMENT_ACTIONS.SET_ACTIVE_TENANT, value: 0 });
       dispatch({ type: ENVIRONMENT_ACTIONS.SET_TENANT, value: tenants[0] });
