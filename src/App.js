@@ -11,6 +11,8 @@ import './App.css';
 
 const store = require('./store/storeConfig').store;
 
+window.store = store;
+
 class App extends Component {
   render() {
     return (
