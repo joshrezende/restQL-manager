@@ -6,17 +6,6 @@ const MongooseMap = require("mongoose-map")(mongoose);
 mongoose.Promise = Promise;
 
 const MONGO_URL = process.env.MONGO_URL || "mongodb://localhost:27017/restql";
-mongoose.connection.on("connected", () => {
-  console.log("Mongoose default connection open to " + MONGO_URL);
-});
-
-mongoose.connection.on("error", err => {
-  console.log("Mongoose default connection error: " + err);
-});
-
-mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose default connection disconnected");
-});
 
 process.on("SIGINT", () => {
   mongoose.connection.close(() => {
@@ -50,7 +39,6 @@ const QuerySchema = new mongoose.Schema(
 const TenantSchema = new mongoose.Schema(
   {
     _id: String,
-    name: String,
     mappings: MongooseMap
   },
   {
@@ -60,5 +48,6 @@ const TenantSchema = new mongoose.Schema(
 
 module.exports = {
   Query: mongoose.model("Query", QuerySchema),
-  Tenant: mongoose.model("Tenant", TenantSchema)
+  Tenant: mongoose.model("Tenant", TenantSchema),
+  db: db
 };

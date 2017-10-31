@@ -63,6 +63,9 @@ function loadTenants() {
     })
     .then(tenants => {
       return Array.from(tenants, t => t._id);
+    })
+    .catch(error => {
+      return [];
     });
 }
 
@@ -74,6 +77,9 @@ function loadResourcesFromTenant(tenant) {
       },
       "mappings",
       (err, dbTenant) => {
+        if (err) {
+          throw err;
+        }
         return dbTenant;
       }
     )
@@ -84,6 +90,9 @@ function loadResourcesFromTenant(tenant) {
       return Promise.all(mappings, values => {
         return values;
       });
+    })
+    .catch(error => {
+      return [];
     });
 }
 
@@ -115,6 +124,9 @@ function loadNamespaces() {
     ])
     .then(namespaces => {
       return namespaces;
+    })
+    .catch(error => {
+      return [];
     });
 }
 
@@ -125,6 +137,11 @@ function loadQueries(namespace) {
     })
     .then(queries => {
       return Array.from(queries, buildQuery);
+    })
+    .then(queries => {
+      return Promise.all(queries, values => {
+        return values;
+      });
     });
 }
 
