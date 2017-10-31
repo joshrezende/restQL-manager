@@ -1,10 +1,12 @@
 {
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "prettier"
   ],
   "plugins": [
     "react",
-    "jest"
+    "jest",
+    "prettier"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -24,6 +26,7 @@
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "prettier/prettier": "error"
   }
 }

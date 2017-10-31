@@ -20,7 +20,7 @@ To start the development server, run:
 yarn start
 ```
 
-Access http://YOUR_IP_ADDRESS:5000/?targetRuntime=http://YOUR_RESTQL_SERVER_ADDRESS. Example: http://localhost:5000/?targetRuntime=http://localhost:9001
+Access http://YOUR_IP_ADDRESS:5000/. Example: http://localhost:5000/
 
 
 # Production build

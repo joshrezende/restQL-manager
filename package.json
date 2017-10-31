@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "dependencies": {
     "@types/react-sidebar": "^2.2.2",
+    "body-parser": "^1.18.2",
     "bootstrap": "^3.3.7",
+    "cross-fetch": "^0.0.8",
+    "es6-promise": "^4.1.1",
     "express": "^4.16.2",
     "font-awesome": "^4.7.0",
+    "mongoose": "^4.12.4",
+    "mongoose-map": "^1.1.0",
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.5",
@@ -21,16 +26,30 @@
   },
   "scripts": {
     "start": "PORT=5000 react-scripts start",
-    "start:server": "node server",
+    "start:server": "nodemon server",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test":
+      "MONGO_URL=\"mongodb://localhost:27017/restql-test\" react-scripts test --env=jsdom --notify",
     "eject": "react-scripts eject",
-    "lint": "eslint src"
+    "lint": "eslint src server",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "babel-eslint": "7",
     "eslint": "^4.9.0",
+    "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-jest": "^21.2.0",
-    "eslint-plugin-react": "^7.4.0"
+    "eslint-plugin-react": "^7.4.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.3.0",
+    "nodemon": "^1.12.1",
+    "prettier": "1.7.4"
+  },
+  "lint-staged": {
+    "*.{js,json,css}": ["prettier --write", "git add"]
+  },
+  "proxy": "http://localhost:3000",
+  "nodemonConfig": {
+    "ignore": ["*.test.js", "src/*"]
   }
 }
