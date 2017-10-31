@@ -4,11 +4,16 @@
  */
 
 // Redux actions
-import { ENVIRONMENT_ACTIONS } from '../reducers/environmentReducer';
+import { ENVIRONMENT_ACTIONS } from "../reducers/environmentReducer";
 
-import { loadTenants, loadResourcesFromTenant, updateResource, processResult } from '../api/restQLAPI';
+import {
+  loadTenants,
+  loadResourcesFromTenant,
+  updateResource,
+  processResult
+} from "../api/restQLAPI";
 
-const store = require('../store/storeConfig').store;
+const store = require("../store/storeConfig").store;
 
 export function handleActiveTenant(tenantKey) {
   const dispatch = store.dispatch;
@@ -24,27 +29,31 @@ export function handleActiveTenant(tenantKey) {
 export function handleLoadTenants() {
   const dispatch = store.dispatch;
 
-  loadTenants((response) => {
-    let result = response.error? {} : processResult(response);
+  loadTenants(response => {
+    let result = response.error ? {} : processResult(response);
     const tenants = result.tenants || [];
 
     if (tenants.length > 0) {
       dispatch({ type: ENVIRONMENT_ACTIONS.LOAD_TENANTS, value: tenants });
       dispatch({ type: ENVIRONMENT_ACTIONS.SET_ACTIVE_TENANT, value: 0 });
       dispatch({ type: ENVIRONMENT_ACTIONS.SET_TENANT, value: tenants[0] });
-    }
-    else {
+    } else {
       dispatch({ type: ENVIRONMENT_ACTIONS.LOAD_TENANTS, value: [] });
     }
   });
 }
 
 export function handleSetTenant(evt) {
-
   const { tenants } = window.store.getState().environmentReducer;
 
-  store.dispatch({ type: ENVIRONMENT_ACTIONS.SET_ACTIVE_TENANT, value: evt.target.value });
-  store.dispatch({ type: ENVIRONMENT_ACTIONS.SET_TENANT, value: tenants[evt.target.value] });
+  store.dispatch({
+    type: ENVIRONMENT_ACTIONS.SET_ACTIVE_TENANT,
+    value: evt.target.value
+  });
+  store.dispatch({
+    type: ENVIRONMENT_ACTIONS.SET_TENANT,
+    value: tenants[evt.target.value]
+  });
 
   handleActiveTenant(evt.target.value);
 }
@@ -54,12 +63,12 @@ export function handleLoadResources() {
 
   const { tenants, tenant, activeTenant } = store.getState().environmentReducer;
 
-  const currentTenant = (tenant !== null ? tenant : tenants[activeTenant]);
+  const currentTenant = tenant !== null ? tenant : tenants[activeTenant];
 
   dispatch({ type: ENVIRONMENT_ACTIONS.CLEAR_RESOURCES });
 
-  loadResourcesFromTenant(currentTenant, (result) => {
-    const resources = (result.body ? result.body.resources : []);
+  loadResourcesFromTenant(currentTenant, result => {
+    const resources = result.body ? result.body.resources : [];
     dispatch({ type: ENVIRONMENT_ACTIONS.LOAD_RESOURCES, value: resources });
   });
 }
@@ -77,30 +86,49 @@ export function handleToggleSaveResourceModal() {
 }
 
 export function handleResourceNameChanged(evt) {
-  store.dispatch({ type: ENVIRONMENT_ACTIONS.RESOURCE_NAME_CHANGED, value: evt.target.value });
+  store.dispatch({
+    type: ENVIRONMENT_ACTIONS.RESOURCE_NAME_CHANGED,
+    value: evt.target.value
+  });
 }
 
 export function handleResourceUrlChanged(evt) {
-  store.dispatch({ type: ENVIRONMENT_ACTIONS.RESOURCE_URL_CHANGED, value: evt.target.value });
+  store.dispatch({
+    type: ENVIRONMENT_ACTIONS.RESOURCE_URL_CHANGED,
+    value: evt.target.value
+  });
 }
 
 export function handleAuthorizationKeyChanged(evt) {
-  store.dispatch({ type: ENVIRONMENT_ACTIONS.AUTHORIZATION_KEY_CHANGED, value: evt.target.value });
+  store.dispatch({
+    type: ENVIRONMENT_ACTIONS.AUTHORIZATION_KEY_CHANGED,
+    value: evt.target.value
+  });
 }
 
 export function handleSaveResource() {
+  const {
+    authorizationKey,
+    tenant,
+    activeResource
+  } = store.getState().environmentReducer;
 
-  const { authorizationKey, tenant, activeResource } = store.getState().environmentReducer;
-
-  updateResource(authorizationKey, tenant, activeResource, (result) => {
-
-    if (result !== undefined && result.error !== undefined && result.error !== null) {
-      store.dispatch({ type: ENVIRONMENT_ACTIONS.UPDATE_RESOURCE_ERROR, value: result.error.message });
-    }
-    else {
-      store.dispatch({ type: ENVIRONMENT_ACTIONS.UPDATE_RESOURCE_SUCCESS, value: 'Resource updated!' });
+  updateResource(authorizationKey, tenant, activeResource, result => {
+    if (
+      result !== undefined &&
+      result.error !== undefined &&
+      result.error !== null
+    ) {
+      store.dispatch({
+        type: ENVIRONMENT_ACTIONS.UPDATE_RESOURCE_ERROR,
+        value: result.error.message
+      });
+    } else {
+      store.dispatch({
+        type: ENVIRONMENT_ACTIONS.UPDATE_RESOURCE_SUCCESS,
+        value: "Resource updated!"
+      });
       handleLoadResources();
     }
   });
-
 }

@@ -1,10 +1,8 @@
 // React
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 // Redux actions
-import { connect } from 'react-redux';
-
-import { getRuntimeTarget } from '../../api/restQLAPI';
+import { connect } from "react-redux";
 
 // Application Logic
 import {
@@ -12,7 +10,6 @@ import {
   handleNewQuery,
   handleShowModal,
   handleToggleSidebar,
-
 
   // Listeners
   handleParamsChange,
@@ -27,38 +24,35 @@ import {
   handleRunQuery,
   handleSaveQuery,
   handleLoadRevisions,
-  handleLoadQueryRevision,
-
-} from '../../actions/queryActionCreator';
+  handleLoadQueryRevision
+} from "../../actions/queryActionCreator";
 
 import {
   handleLoadTenants,
-  handleSetTenant,
-} from '../../actions/environmentActionCreator';
+  handleSetTenant
+} from "../../actions/environmentActionCreator";
 
 // CSS for this screen and logo
-import './QueryEditorScreen.css';
-import Logo from '../restQL-logo.svg';
+import "./QueryEditorScreen.css";
+import Logo from "../restQL-logo.svg";
 
 // Custom Components for this screen
-import QueryNavbar from './QueryNavbar';
-import QuerySidebar from './QuerySidebar';
-import QueryEditor from './QueryEditor';
+import QueryNavbar from "./QueryNavbar";
+import QuerySidebar from "./QuerySidebar";
+import QueryEditor from "./QueryEditor";
 
 class QueryEditorScreen extends Component {
-
   constructor(props) {
     super(props);
     handleLoadNamespaces();
 
-    if (this.props.tenants.length === 0)
-      handleLoadTenants();
+    if (this.props.tenants.length === 0) handleLoadTenants();
   }
-
 
   render() {
     return (
-      <QuerySidebar className="QueryEditorScreen"
+      <QuerySidebar
+        className="QueryEditorScreen"
         loadingNamespaces={this.props.loadingNamespaces}
         loadingQueries={this.props.loadingQueries}
         showSidebar={this.props.showSidebar}
@@ -66,14 +60,15 @@ class QueryEditorScreen extends Component {
         namespace={this.props.namespace}
         collapsedNamespace={this.props.collapsedNamespace}
         queries={this.props.queries}
-
         toggleSidebar={handleToggleSidebar}
         loadQueries={handleLoadQueries}
-        loadQuery={handleLoadQuery}>
-
-        <QueryNavbar logo={Logo}
+        loadQuery={handleLoadQuery}
+      >
+        <QueryNavbar
+          logo={Logo}
           toggleSidebar={handleToggleSidebar}
-          newQuery={handleNewQuery} />
+          newQuery={handleNewQuery}
+        />
 
         <div className="container">
           <QueryEditor
@@ -85,41 +80,36 @@ class QueryEditorScreen extends Component {
             queryParams={this.props.queryParams}
             resultString={this.props.resultString}
             running={this.props.running}
-
             // Env props
             tenant={this.props.tenant}
             tenants={this.props.tenants}
             handleSetTenant={handleSetTenant}
             activeTenant={this.props.activeTenant}
-            resourcesLink={'/resources-editor?targetRuntime=' + getRuntimeTarget()}
-
+            resourcesLink={"/resources-editor"}
             // Modal options and listeners
             showModal={this.props.showModal}
             toggleModal={handleShowModal}
             handleNamespaceChange={handleNamespaceChange}
             handleQueryNameChange={handleQueryNameChange}
-
             // RevisionCombo props
             shouldLoadRevisions={this.props.shouldLoadRevisions}
             loadRevisions={handleLoadRevisions}
             handleLoadQueryRevision={handleLoadQueryRevision}
-
             // Listeners to run query
             onQueryStringChange={handleQueryStringChange}
             onParamsChange={handleParamsChange}
-
             // Actions
             handleRun={handleRunQuery}
             handleSaveQuery={handleSaveQuery}
-            handleRunQuery={handleRunQuery} />
+            handleRunQuery={handleRunQuery}
+          />
         </div>
-
       </QuerySidebar>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   queryString: state.queryReducer.query,
   queryParams: state.queryReducer.queryParams,
   resultString: state.queryReducer.queryResult,
@@ -139,7 +129,7 @@ const mapStateToProps = (state) => ({
   // Env configurations
   tenants: state.environmentReducer.tenants,
   tenant: state.environmentReducer.tenant,
-  activeTenant: state.environmentReducer.activeTenant,
+  activeTenant: state.environmentReducer.activeTenant
 });
 
 export default connect(mapStateToProps, null)(QueryEditorScreen);
