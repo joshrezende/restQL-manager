@@ -9,8 +9,7 @@ import { ENVIRONMENT_ACTIONS } from "../reducers/environmentReducer";
 import {
   loadTenants,
   loadResourcesFromTenant,
-  updateResource,
-  processResult
+  updateResource
 } from "../api/restQLAPI";
 
 const store = require("../store/storeConfig").store;
@@ -29,8 +28,8 @@ export function handleActiveTenant(tenantKey) {
 export function handleLoadTenants() {
   const dispatch = store.dispatch;
 
-  loadTenants(response => {
-    let result = response.error ? {} : processResult(response);
+  loadTenants((response, error) => {
+    let result = error ? {} : response;
     const tenants = result.tenants || [];
 
     if (tenants.length > 0) {
@@ -67,8 +66,8 @@ export function handleLoadResources() {
 
   dispatch({ type: ENVIRONMENT_ACTIONS.CLEAR_RESOURCES });
 
-  loadResourcesFromTenant(currentTenant, result => {
-    const resources = result.body ? result.body.resources : [];
+  loadResourcesFromTenant(currentTenant, (response, error) => {
+    const resources = error ? [] : response;
     dispatch({ type: ENVIRONMENT_ACTIONS.LOAD_RESOURCES, value: resources });
   });
 }
@@ -113,15 +112,11 @@ export function handleSaveResource() {
     activeResource
   } = store.getState().environmentReducer;
 
-  updateResource(authorizationKey, tenant, activeResource, result => {
-    if (
-      result !== undefined &&
-      result.error !== undefined &&
-      result.error !== null
-    ) {
+  updateResource(authorizationKey, tenant, activeResource, (result, error) => {
+    if (error) {
       store.dispatch({
         type: ENVIRONMENT_ACTIONS.UPDATE_RESOURCE_ERROR,
-        value: result.error.message
+        value: error.message
       });
     } else {
       store.dispatch({

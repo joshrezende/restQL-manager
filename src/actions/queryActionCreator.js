@@ -14,8 +14,7 @@ import {
   loadRevision,
   loadRevisionByUrl,
   runQuery,
-  saveQuery,
-  processResult
+  saveQuery
 } from "../api/restQLAPI";
 
 const store = require("../store/storeConfig").store;
@@ -80,16 +79,17 @@ export function handleRunQuery() {
     type: QUERY_ACTIONS.RUNNING_QUERY
   });
 
-  runQuery(query, queryParams, tenant, result => {
-    let processed = processResult(result);
-    let processedString = JSON.stringify(processed, null, 2);
+  runQuery(query, queryParams, tenant, (result, error) => {
+    if (error) {
+      let processedString = JSON.stringify(error, null, 2);
 
-    if (processed.error !== undefined) {
       dispatch({
         type: QUERY_ACTIONS.QUERY_ERROR,
         value: processedString
       });
     } else {
+      let processedString = JSON.stringify(result, null, 2);
+
       dispatch({
         type: QUERY_ACTIONS.QUERY_SUCCESS,
         value: processedString
@@ -120,16 +120,17 @@ export function handleSaveQuery() {
     });
   }
 
-  saveQuery(tenant, namespace, queryName, query, result => {
-    let processed = processResult(result);
-    let processedString = JSON.stringify(processed, null, 2);
+  saveQuery(tenant, namespace, queryName, query, (result, error) => {
+    if (error) {
+      let processedString = JSON.stringify(error, null, 2);
 
-    if (result.error) {
       dispatch({
         type: QUERY_ACTIONS.QUERY_ERROR,
         value: processedString
       });
     } else {
+      let processedString = JSON.stringify(result, null, 2);
+
       dispatch({
         type: QUERY_ACTIONS.QUERY_SAVED,
         value: processedString
@@ -149,14 +150,12 @@ export function handleLoadNamespaces() {
 
   dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADING });
 
-  loadNamespaces(response => {
-    if (response.error) {
+  loadNamespaces((response, error) => {
+    if (error) {
       dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADED, value: [] });
-      alert("Error loading namespaces: " + response.error);
+      alert("Error loading namespaces: " + error);
     } else {
-      let result = processResult(response);
-
-      dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADED, value: result });
+      dispatch({ type: QUERY_ACTIONS.NAMESPACES_LOADED, value: response });
     }
   });
 }
@@ -168,10 +167,8 @@ export function handleLoadRevisions() {
 
   dispatch({ type: QUERY_ACTIONS.REVISIONS_LOADING });
 
-  loadRevisions(namespace, queryName, response => {
-    let result = processResult(response);
-
-    if (result.error !== undefined) {
+  loadRevisions(namespace, queryName, (response, error) => {
+    if (error) {
       dispatch({
         type: QUERY_ACTIONS.REVISIONS_LOADED,
         value: []
@@ -179,7 +176,7 @@ export function handleLoadRevisions() {
     } else {
       dispatch({
         type: QUERY_ACTIONS.REVISIONS_LOADED,
-        value: result.revisions
+        value: response.revisions
       });
     }
   });
@@ -192,17 +189,17 @@ export function handleLoadQueryRevision(evt) {
 
   dispatch({ type: QUERY_ACTIONS.QUERY_LOADING });
 
-  loadRevision(namespace, queryName, evt.target.value, response => {
-    if (response.error === null) {
+  loadRevision(namespace, queryName, evt.target.value, (response, error) => {
+    if (error) {
       dispatch({
-        type: QUERY_ACTIONS.QUERY_LOADED,
-        queryName: queryName,
-        value: response.body.text
+        type: QUERY_ACTIONS.QUERY_ERROR,
+        value: error
       });
     } else {
       dispatch({
-        type: QUERY_ACTIONS.QUERY_ERROR,
-        value: response.body.text
+        type: QUERY_ACTIONS.QUERY_LOADED,
+        queryName: queryName,
+        value: response
       });
     }
   });
@@ -216,16 +213,14 @@ export function handleLoadQueries(namespace) {
     value: namespace
   });
 
-  loadQueries(namespace, response => {
-    let result = processResult(response);
-
-    if (result.error !== undefined) {
+  loadQueries(namespace, (response, error) => {
+    if (error) {
       dispatch({ type: QUERY_ACTIONS.QUERIES_LOADED, value: [] });
-      alert("Error loading queries: " + result.error);
+      alert("Error loading queries: " + error);
     } else {
       dispatch({
         type: QUERY_ACTIONS.QUERIES_LOADED,
-        value: result.queries
+        value: response.queries
       });
     }
   });
@@ -238,21 +233,21 @@ export function handleLoadQuery(query) {
     type: QUERY_ACTIONS.QUERY_LOADING
   });
 
-  loadRevisionByUrl(query["last-revision"], response => {
-    if (response.error === null) {
+  loadRevisionByUrl(query["last-revision"], (response, error) => {
+    if (error) {
+      dispatch({
+        type: QUERY_ACTIONS.QUERY_ERROR,
+        value: error
+      });
+    } else {
       dispatch({
         type: QUERY_ACTIONS.QUERY_LOADED,
         queryName: query.id,
-        value: response.body.text
+        value: response
       });
 
       dispatch({
         type: QUERY_ACTIONS.LOAD_REVISIONS
-      });
-    } else {
-      dispatch({
-        type: QUERY_ACTIONS.QUERY_ERROR,
-        value: response.body.text
       });
     }
   });

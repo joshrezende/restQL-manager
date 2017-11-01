@@ -1,6 +1,6 @@
 const url = require("url");
 
-const { fetch } = require("cross-fetch");
+const fetch = require("cross-fetch");
 
 const RESTQL_SERVER_URL =
   process.env.RESTQL_SERVER_URL || "http://localhost:9000";
