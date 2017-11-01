@@ -20,7 +20,6 @@ install:
   - npm install -g codecov
 
 script:
-  - yarn build
   - yarn test -- --coverage
 
 after_success:
