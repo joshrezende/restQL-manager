@@ -53,12 +53,17 @@ function buildQueryRevisions(namespace, query, index) {
 }
 
 function loadTenants() {
-  return models.Tenant.find({}, "_id", (err, tenants) => {
-    if (err) {
-      throw err;
-    }
-    return Array.from(tenants, t => t._id);
-  });
+  return models.Tenant
+    .find({}, "_id", (err, tenants) => {
+      if (err) {
+        throw err;
+      }
+
+      return tenants;
+    })
+    .then(tenants => {
+      return Array.from(tenants, t => t._id);
+    });
 }
 
 function loadResourcesFromTenant(tenant) {
