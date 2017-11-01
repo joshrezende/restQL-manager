@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "PORT=5000 react-scripts start",
-    "start:server": "nodemon server",
+    "start:server": "nodemon src/server",
     "build": "react-scripts build",
     "test":
       "MONGO_URL=\"mongodb://localhost:27017/restql-test\" react-scripts test --env=jsdom --notify",
@@ -50,6 +50,6 @@
   },
   "proxy": "http://localhost:3000",
   "nodemonConfig": {
-    "ignore": ["*.test.js", "src/*"]
+    "ignore": ["*.test.js"]
   }
 }
