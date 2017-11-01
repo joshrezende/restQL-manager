@@ -11,11 +11,10 @@ COPY public /app/public
 COPY package.json /app/package.json
 COPY yarn.lock /app/yarn.lock
 
-RUN yarn install
+RUN yarn install --production
 
 COPY src /app/src
-COPY server /app/server
 
 RUN yarn build
 
-CMD ["node", "server"]
+CMD ["node", "src/server"]

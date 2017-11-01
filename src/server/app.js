@@ -9,7 +9,7 @@ const AUTHORIZATION_KEY = process.env.AUTHORIZATION_KEY || "";
 
 const app = express();
 
-app.use(express.static(path.resolve(__dirname, "..", "build")));
+app.use(express.static(path.resolve(__dirname, "..", "..", "build")));
 app.use(bodyParser.json());
 
 app.get("/tenants", (req, res) => {
@@ -125,7 +125,7 @@ app.post("/ns/:namespace/query/:name", (req, res) => {
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "..", "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "..", "..", "build", "index.html"));
 });
 
 module.exports = app;

@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/thulio/restQL-manager.svg?branch=master)](https://travis-ci.org/thulio/restQL-manager)
 ## Running restQL Manager
 
 restQL Manager allows you to easily develop and test new queries, save resources endpoints, check resources status and save queries that can be used by clients just referencing the query's name.
@@ -17,10 +18,16 @@ yarn install
 To start the development server, run:
 
 ```shell
+yarn server:start
+```
+
+In another shell, run:
+
+```shell
 yarn start
 ```
 
-Access http://YOUR_IP_ADDRESS:5000/. Example: http://localhost:5000/
+Access http://localhost:5000/.
 
 
 # Production build
