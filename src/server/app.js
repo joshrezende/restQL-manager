@@ -124,6 +124,14 @@ app.post("/ns/:namespace/query/:name", (req, res) => {
     });
 });
 
+app.get("/health", (req, res) => {
+  res.json({ ok: true });
+});
+
+app.get("/resource-status", (req, res) => {
+  res.json({ ok: true });
+});
+
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "..", "..", "build", "index.html"));
 });
