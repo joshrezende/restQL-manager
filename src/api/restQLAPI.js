@@ -87,7 +87,7 @@ export function runQuery(
   callback
 ) {
   const runQueryUrl =
-    window.location +
+    window.location.origin +
     "/run-query?" +
     queryParams +
     (tenant ? "&tenant=" + tenant : "");
