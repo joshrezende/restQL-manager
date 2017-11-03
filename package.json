@@ -50,6 +50,7 @@
   },
   "proxy": "http://localhost:3000",
   "nodemonConfig": {
-    "ignore": ["*.test.js"]
+    "ignore": ["*.test.js"],
+    "watch": ["src/server/"]
   }
 }
