@@ -132,6 +132,7 @@ app.get("/resource-status", (req, res) => {
   res.json({ ok: true });
 });
 
+/* istanbul ignore next */
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "..", "..", "build", "index.html"));
 });

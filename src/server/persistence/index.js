@@ -216,12 +216,12 @@ function addQuery(namespace, name, query) {
 }
 
 module.exports = {
-  loadTenants: loadTenants,
-  loadResourcesFromTenant: loadResourcesFromTenant,
-  saveResource: saveResource,
-  loadNamespaces: loadNamespaces,
-  loadQueries: loadQueries,
-  loadQueryRevisions: loadQueryRevisions,
-  loadQueryRevision: loadQueryRevision,
-  addQuery: addQuery
+  loadTenants,
+  loadResourcesFromTenant,
+  saveResource,
+  loadNamespaces,
+  loadQueries,
+  loadQueryRevisions,
+  loadQueryRevision,
+  addQuery
 };

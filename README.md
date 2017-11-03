@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/thulio/restQL-manager.svg?branch=master)](https://travis-ci.org/thulio/restQL-manager)
+[![codecov](https://codecov.io/gh/thulio/restQL-manager/branch/add-tests/graph/badge.svg)](https://codecov.io/gh/thulio/restQL-manager)
+
 ## Running restQL Manager
 
 restQL Manager allows you to easily develop and test new queries, save resources endpoints, check resources status and save queries that can be used by clients just referencing the query's name.
