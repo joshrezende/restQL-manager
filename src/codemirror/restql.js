@@ -15,6 +15,29 @@ const languageOperatorsList = ["flatten", "expand", "contract", "json"];
 (function(mod) {
   mod(CodeMirror);
 })(function(CodeMirror) {
+  CodeMirror.defineSimpleMode("restql", {
+    // The start state contains the rules that are intially used
+    start: [
+      // The regex matches the token, the token property contains the type
+      { regex: /"(?:[^\\]|\\.)*?(?:"|$)/, token: "string" },
+      // You can match multiple tokens at once. Note that the captured
+      // groups must span the whole string in this case
+      {
+        regex: /(?:from|as|headers|with|only|json|flatten|timeout|hidden|ignore-errors)/,
+        token: ["keyword"]
+      },
+      // Rules are matched in the order in which they appear, so there is
+      // no ambiguity between this one and the one above
+      { regex: /true|false|null|undefined/, token: "atom" },
+      {
+        regex: /0x[a-f\d]+|[-+]?(?:\.\d+|\d+\.?\d*)(?:e[-+]?\d+)?/i,
+        token: "number"
+      },
+      { regex: /\$[a-zA-Z]+|=\s*[a-zA-Z]+(\.[a-zA-Z]+)+/, token: "variable-3" },
+      // A next property will cause the mode to move to a different state
+      { regex: /[-+/*=<>!]+/, token: "operator" }
+    ]
+  });
   CodeMirror.registerHelper("hint", "anyword", function(editor) {
     let list = [].concat(languageTokenList);
 
