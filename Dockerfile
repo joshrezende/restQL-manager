@@ -12,6 +12,7 @@ COPY public /app/public
 
 COPY package.json /app/package.json
 COPY yarn.lock /app/yarn.lock
+COPY .yarnclean /app/.yarnclean
 
 RUN yarn install --production
 
