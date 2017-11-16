@@ -60,31 +60,7 @@ function runNamedQuery(namespace, name, revision, params) {
     });
 }
 
-function validateQuery(query, params) {
-  return fetch(
-    RESTQL_SERVER_URL +
-      "/validate-query" +
-      url.format({
-        query: params
-      }),
-    {
-      headers: RESTQL_HEADERS,
-      method: "POST",
-      body: query
-    }
-  ).then(response => {
-    if (response.status !== 200) {
-      let error = Error(response.message);
-      error.response = response;
-      throw error;
-    } else {
-      return true;
-    }
-  });
-}
-
 module.exports = {
   runQuery: runQuery,
-  runNamedQuery: runNamedQuery,
-  validateQuery: validateQuery
+  runNamedQuery: runNamedQuery
 };
