@@ -40,4 +40,11 @@ To build a production bundle, run:
 yarn build
 ```
 
-You can now deploy the `build` folder.
+You can now start the server:
+
+```shell
+node src/server
+```
+
+restQL-manager will be available at `http://localhost:3000/`
+
