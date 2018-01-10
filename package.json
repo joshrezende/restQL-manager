@@ -1,6 +1,6 @@
 {
   "name": "restql-manager",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
     "@types/react-sidebar": "^2.2.2",
     "body-parser": "^1.18.2",
@@ -57,5 +57,9 @@
   "nodemonConfig": {
     "ignore": ["*.test.js"],
     "watch": ["src/server/"]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/B2W-BIT/restQL-manager"
   }
 }
