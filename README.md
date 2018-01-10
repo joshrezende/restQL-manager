@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/B2W-BIT/restQL-manager.svg?branch=new-routes)](https://travis-ci.org/B2W-BIT/restQL-manager)
-[![codecov](https://codecov.io/gh/B2W-BIT/restQL-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/B2W-BIT/restQL-manager)
 
 ## Running restQL Manager
 
