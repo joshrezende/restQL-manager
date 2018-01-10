@@ -24,6 +24,9 @@
     "react-sidebar": "^2.3.2",
     "redux": "^3.7.2"
   },
+  "bin": {
+    "restql-manager": "bin/manager.js"
+  },
   "scripts": {
     "start": "PORT=5000 react-scripts start",
     "start:server": "nodemon src/server",

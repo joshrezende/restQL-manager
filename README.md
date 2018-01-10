@@ -6,6 +6,14 @@ restQL Manager allows you to easily develop and test new queries, save resources
 
 restQL Manager requires a [restQL-server](https://github.com/B2W-BIT/restQL-server) running instance.
 
+## Configuration
+
+restQL Manager uses the following environment variables for its configuration:
+
+- **RESTQL_SERVER_URL**. This should point to a running [restQL-server](https://github.com/B2W-BIT/restQL-server) instance
+- **RESTQL_MANAGER_PORT**. Default is 3000. Set this variable to change the TCP port to be bound.
+- **MONGO_URL**. This should point to the same mongoDB instances used by the referenced [restQL-server](https://github.com/B2W-BIT/restQL-server).
+
 
 ## Development server
 
