@@ -33,7 +33,7 @@ yarn install
 To start the development server, run:
 
 ```shell
-yarn server:start
+yarn start:server
 ```
 
 In another shell, run:
