@@ -13,6 +13,7 @@
     "mongoose": "^4.12.4",
     "mongoose-map": "^1.1.0",
     "prop-types": "^15.6.0",
+    "query-string": "^6.0.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.5",
     "react-codemirror": "^0.3.0",

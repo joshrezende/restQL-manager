@@ -4,6 +4,7 @@ export const initialState = {
   queryName: "",
   query: "",
   queryParams: "",
+  newParams: "",
   running: false,
   error: false,
   queryResult: "",
@@ -29,6 +30,7 @@ export const QUERY_ACTIONS = {
   RUNNING_QUERY: "RUNNING_QUERY",
   QUERY_ERROR: "QUERY_ERROR",
   QUERY_SUCCESS: "QUERY_SUCCESS",
+  CHANGE_QUERY: "CHANGE_QUERY",
   SAVING_QUERY: "SAVING_QUERY",
   QUERY_SAVED: "QUERY_SAVED",
 
@@ -56,6 +58,8 @@ const queryReducer = (state = initialState, action) => {
       return { ...state, query: action.value };
     case QUERY_ACTIONS.READ_QUERY_PARAMS:
       return { ...state, queryParams: action.value };
+    case QUERY_ACTIONS.READ_QUERY_PARAMS:
+      return { ...state, newParams: action.value };
     case QUERY_ACTIONS.RUNNING_QUERY:
       return { ...state, running: true, error: false, queryResult: "" };
     case QUERY_ACTIONS.QUERY_ERROR:

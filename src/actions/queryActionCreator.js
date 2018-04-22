@@ -69,6 +69,13 @@ export function handleParamsChange(evt) {
   });
 }
 
+export function handleFurfles(array) {
+  store.dispatch({
+    type: QUERY_ACTIONS.CHANGE_QUERY,
+    value: array
+  });
+}
+
 // Async API Calls
 export function handleRunQuery() {
   const dispatch = store.dispatch;

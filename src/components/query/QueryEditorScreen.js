@@ -16,6 +16,7 @@ import {
   handleNamespaceChange,
   handleQueryNameChange,
   handleQueryStringChange,
+  handleFurfles,
 
   // Business logic operations
   handleLoadNamespaces,
@@ -98,6 +99,7 @@ class QueryEditorScreen extends Component {
             // Listeners to run query
             onQueryStringChange={handleQueryStringChange}
             onParamsChange={handleParamsChange}
+            onFurflesChange={handleFurfles}
             // Actions
             handleRun={handleRunQuery}
             handleSaveQuery={handleSaveQuery}
