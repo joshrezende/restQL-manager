@@ -8,6 +8,7 @@ import CodeMirror from "react-codemirror";
 import "codemirror/lib/codemirror.css";
 // Code Theme
 import "codemirror/theme/eclipse.css";
+import "codemirror/theme/monokai.css";
 // Code language
 import "codemirror/mode/javascript/javascript";
 // Code folders
@@ -29,11 +30,37 @@ import TenantCombo from "./TenantCombo";
 
 export default class QueryEditor extends Component {
   render() {
+    const {
+      queryString,
+      onQueryStringChange,
+      queryParams,
+      handleSaveQuery,
+      handleRun,
+      toggleModal,
+      running,
+      shouldLoadRevisions,
+      revisions,
+      handleLoadQueryRevision,
+      onParamsChange,
+      handleRunQuery,
+      namespace,
+      queryName,
+      handleNamespaceChange,
+      handleQueryNameChange,
+      showModal,
+      tenant,
+      tenants,
+      handleSetTenant,
+      activeTenant,
+      resourcesLink,
+      resultString
+    } = this.props;
+
     const baseOptions = {
       lineNumbers: true,
       tabSize: 2,
       mode: "restql",
-      theme: "eclipse",
+      theme: "monokai",
       foldGutter: true,
       gutters: [
         "CodeMirror-linenumbers",
@@ -45,12 +72,12 @@ export default class QueryEditor extends Component {
     const editorOptions = {
       ...baseOptions,
       extraKeys: {
-        "Shift-Enter": this.props.handleRun,
-        "Ctrl-S": this.props.toggleModal,
-        "Cmd-S": this.props.toggleModal,
+        "Shift-Enter": handleRun,
+        "Ctrl-S": toggleModal,
+        "Cmd-S": toggleModal,
         "Ctrl-Space": "autocomplete"
       },
-      readOnly: this.props.running
+      readOnly: running
     };
 
     const resultOptions = {
@@ -71,13 +98,13 @@ export default class QueryEditor extends Component {
           <div className="queryTitle">
             <h3>
               Query
-              {this.props.shouldLoadRevisions ? (
+              {shouldLoadRevisions ? (
                 this.props.loadRevisions()
               ) : (
                 <RevisionCombo
-                  toggle={this.props.revisions.length > 0}
-                  revisions={this.props.revisions}
-                  handleLoadQueryRevision={this.props.handleLoadQueryRevision}
+                  toggle={revisions.length > 0}
+                  revisions={revisions}
+                  handleLoadQueryRevision={handleLoadQueryRevision}
                 />
               )}
             </h3>
@@ -85,8 +112,8 @@ export default class QueryEditor extends Component {
 
           <CodeMirror
             className="queryInput"
-            value={this.props.queryString}
-            onChange={this.props.onQueryStringChange}
+            value={queryString}
+            onChange={onQueryStringChange}
             options={editorOptions}
           />
 
@@ -97,27 +124,27 @@ export default class QueryEditor extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  value={this.props.queryParams}
+                  value={queryParams}
                   placeholder="name=test&age=18"
-                  onChange={this.props.onParamsChange}
+                  onChange={onParamsChange}
                 />
               </div>
 
               <div className="options">
                 <OverlayTrigger placement="bottom" overlay={runTooltip}>
-                  <Button bsStyle="success" onClick={this.props.handleRunQuery}>
+                  <Button bsStyle="success" onClick={handleRunQuery}>
                     Run Query
                   </Button>
                 </OverlayTrigger>
 
                 <SaveModal
-                  onSave={this.props.handleSaveQuery}
-                  namespace={this.props.namespace}
-                  queryName={this.props.queryName}
-                  handleNamespaceChange={this.props.handleNamespaceChange}
-                  handleQueryNameChange={this.props.handleQueryNameChange}
-                  show={this.props.showModal}
-                  toggleModal={this.props.toggleModal}
+                  onSave={handleSaveQuery}
+                  namespace={namespace}
+                  queryName={queryName}
+                  handleNamespaceChange={handleNamespaceChange}
+                  handleQueryNameChange={handleQueryNameChange}
+                  show={showModal}
+                  toggleModal={toggleModal}
                   tooltip="Ctrl+S"
                 />
               </div>
@@ -126,11 +153,11 @@ export default class QueryEditor extends Component {
             <Col sm={12} md={3}>
               <TenantCombo
                 className="from-group"
-                tenant={this.props.tenant}
-                tenants={this.props.tenants}
-                handleSetTenant={this.props.handleSetTenant}
-                activeTenant={this.props.activeTenant}
-                resourcesLink={this.props.resourcesLink}
+                tenant={tenant}
+                tenants={tenants}
+                handleSetTenant={handleSetTenant}
+                activeTenant={activeTenant}
+                resourcesLink={resourcesLink}
               />
             </Col>
           </Row>
@@ -140,7 +167,7 @@ export default class QueryEditor extends Component {
           <h3>Result</h3>
           <CodeMirror
             className="queryResult"
-            value={this.props.resultString}
+            value={resultString}
             options={resultOptions}
           />
         </Col>
